@@ -1,0 +1,58 @@
+name: Build Calculator
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Nix
+      uses: cachix/install-nix-action@v24
+      with:
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+
+    - name: Enter devShell and install PyInstaller
+      run: |
+        nix develop --impure --command bash -c "
+          pip install pyinstaller
+          pyinstaller --onefile test_gui.py
+        "
+
+    - name: Upload Linux binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: calculator-linux
+        path: dist/stupid_gui_linux
+
+  windows-build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: get pyinstaller
+      run: pip install pyinstaller
+
+    - name: Build using pyinstaller
+      run: pyinstaller --onefile test_gui.py
+
+    - name: Upload the file
+      uses: actions/upload-artifact@v4
+      with:
+        name: calculator-windows
+        path: dist/stupid_gui.exe
