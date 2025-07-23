@@ -23,7 +23,7 @@ jobs:
     - name: Enter devShell and install PyInstaller
       run: |
         nix develop --impure --command bash -c "
-          pip install pyinstaller
+          pipx install pyinstaller
           pyinstaller --onefile test_gui.py
         "
 
