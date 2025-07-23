@@ -22,16 +22,16 @@ def calculate():
             result = numbers[0]
             for n in numbers[1:]:
                 if n == 0:
-                    result_label.config(text="im not bugging out bc of u do it urself")
+                    result_label.config(text="do it yourself")
                     return
                 result /= n
         elif op == "sqrt" or op == "square root":
             result = [round(math.sqrt(n), 2) for n in numbers]
         else:
-            result_label.config(text="if u r typing squareroot pls just type it with spaces vro")
+            result_label.config(text="what did you just type?")
             return
 
-        result_label.config(text=f"Result: {round(result, 2) if isinstance(result, float) else result}")
+        result_label.config(text=f"The result is: {round(result, 2) if isinstance(result, float) else result}")
 
     except ValueError:
         result_label.config(text="i dont think you typed numbers...")
@@ -43,9 +43,9 @@ def pmtp_gui():
         ketqua = round(math.pi * so, 5)
         ketqua_nhan.config(text=f"pi * {so} = {ketqua}")
     except ValueError:
-        ketqua_nhan.config(text="why do u want me to do ts vro")
+        ketqua_nhan.config(text="im not doing it")
 
-# GUI setup
+# the gui
 root = tk.Tk()
 root.title("my stupid calculator")
 root.configure(bg="#1e1e1e")
